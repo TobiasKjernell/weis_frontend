@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-void: #08050c;
+  --color-void-2: #0c0813;
+  --color-surface: #130d1e;
+  --color-surface-2: #1a1128;
+  --color-line: #2a1f3a;
+
+  --color-ink: #f4eefb;
+  --color-ink-muted: #ab9cc4;
+  --color-ink-dim: #71638c;
+
+  --color-magenta: #ff2e88;
+  --color-magenta-soft: #ff7fb8;
+  --color-cyan: #35eaff;
+  --color-cyan-soft: #9df3ff;
+  --color-violet: #8b5cf6;
+  --color-blood: #ff2d4e;
+
+  --font-display: 'Orbitron', 'Arial Narrow', sans-serif;
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --shadow-glow-magenta: 0 0 1px rgba(255, 46, 136, 0.8), 0 0 22px rgba(255, 46, 136, 0.45), 0 0 64px rgba(255, 46, 136, 0.2);
+  --shadow-glow-cyan: 0 0 1px rgba(53, 234, 255, 0.8), 0 0 22px rgba(53, 234, 255, 0.4), 0 0 64px rgba(53, 234, 255, 0.18);
+
+  --animate-flicker: flicker 4s ease-in-out infinite;
+  --animate-scan: scan 7s linear infinite;
+  --animate-pulse-glow: pulse-glow 2.6s ease-in-out infinite;
+
+  --breakpoint-xs: 30rem;
+}
+
+@keyframes flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.55;
+  }
+  94% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.7;
+  }
+  96% {
+    opacity: 1;
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-void);
+  }
+
+  body {
+    background: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-magenta);
+    color: var(--color-void);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface-2);
+    border-radius: 999px;
+    border: 2px solid var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-magenta);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-glow-magenta {
+    text-shadow:
+      0 0 8px rgba(255, 46, 136, 0.8),
+      0 0 28px rgba(255, 46, 136, 0.4);
+  }
+  .text-glow-cyan {
+    text-shadow:
+      0 0 8px rgba(53, 234, 255, 0.75),
+      0 0 28px rgba(53, 234, 255, 0.35);
+  }
+
+  /* Fixed film-grain texture, layered above content sections. */
+  .grain-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 140px 140px;
+  }
+
+  /* Static horizontal scanlines, evokes a CRT monitor. */
+  .crt-scanlines {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.05) 0,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .bg-grid-horizon {
+    background-image:
+      linear-gradient(rgba(255, 46, 136, 0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 46, 136, 0.18) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
