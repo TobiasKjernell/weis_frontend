@@ -1,14 +1,43 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { useVideoItems } from '../../hooks/useVideoItems'
+import { cn } from '../../lib/utils'
 import { Button, LinkButton } from '../ui/Button'
 import { QueryBoundary } from '../ui/QueryBoundary'
 import { SectionHeading } from '../ui/SectionHeading'
 import { VideoCard } from './VideoCard'
+import { VideoPlayer } from './VideoPlayer'
 import { VideoSkeleton } from './VideoSkeleton'
 import type { VideoItem } from '../../schemas/videoItem'
 
 const PREVIEW_COUNT = 3
+type ViewMode = 'grid' | 'player'
+
+function ViewModeToggle({ mode, onChange }: { mode: ViewMode; onChange: (mode: ViewMode) => void }) {
+  const options: { value: ViewMode; label: string }[] = [
+    { value: 'grid', label: 'Grid' },
+    { value: 'player', label: 'Player' },
+  ]
+
+  return (
+    <div className="inline-flex rounded-full border border-line p-1">
+      {options.map((option) => (
+        <button
+          key={option.value}
+          type="button"
+          onClick={() => onChange(option.value)}
+          aria-pressed={mode === option.value}
+          className={cn(
+            'rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] transition',
+            mode === option.value ? 'bg-cyan/15 text-cyan shadow-glow-cyan' : 'text-ink-muted hover:text-ink',
+          )}
+        >
+          {option.label}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 function VideoGrid({ items }: { items: VideoItem[] }) {
   const [expanded, setExpanded] = useState(false)
@@ -45,8 +74,8 @@ function VideoGrid({ items }: { items: VideoItem[] }) {
         </AnimatePresence>
       )}
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-        {hasMore && (
+      {hasMore && (
+        <div className="mt-8 flex justify-center">
           <Button type="button" variant="outline" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
             {expanded ? 'Show less' : 'Show more'}
             <motion.svg
@@ -61,27 +90,24 @@ function VideoGrid({ items }: { items: VideoItem[] }) {
               <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
             </motion.svg>
           </Button>
-        )}
-        <LinkButton
-          href="https://www.youtube.com/@moroiimusic/videos"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="ghost"
-        >
-          More on YouTube ↗
-        </LinkButton>
-      </div>
+        </div>
+      )}
     </div>
   )
 }
 
 export function Videos() {
   const query = useVideoItems()
+  const [mode, setMode] = useState<ViewMode>('grid')
 
   return (
     <section id="videos" className="relative scroll-mt-20 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading eyebrow="Watch" title="Music Videos" align="center" />
+
+        <div className="mt-8 flex justify-center">
+          <ViewModeToggle mode={mode} onChange={setMode} />
+        </div>
 
         <div className="mt-12">
           <QueryBoundary
@@ -89,8 +115,19 @@ export function Videos() {
             skeleton={<VideoSkeleton />}
             emptyMessage="No videos are available right now — check back soon."
           >
-            {(items) => <VideoGrid items={items} />}
+            {(items) => (mode === 'grid' ? <VideoGrid items={items} /> : <VideoPlayer items={items} />)}
           </QueryBoundary>
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <LinkButton
+            href="https://www.youtube.com/@moroiimusic/videos"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="ghost"
+          >
+            More on YouTube ↗
+          </LinkButton>
         </div>
       </div>
     </section>
