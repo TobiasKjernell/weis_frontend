@@ -1,8 +1,9 @@
 import { z } from 'zod'
-import { mockGalleryItems, mockMerchItems, mockTourDates } from './mockData'
+import { mockGalleryItems, mockMerchItems, mockTourDates, mockVideoItems } from './mockData'
 import { galleryItemListSchema } from '../schemas/galleryItem'
 import { merchItemListSchema } from '../schemas/merchItem'
 import { tourDateListSchema } from '../schemas/tourDate'
+import { videoItemListSchema } from '../schemas/videoItem'
 import { getSimulatedDelay, shouldSimulateEmpty, shouldSimulateError } from './config'
 
 function wait(ms: number) {
@@ -44,4 +45,11 @@ export async function fetchMerchItems() {
   if (shouldSimulateError('merch')) throw new Error('Unable to load merch inventory.')
   const data = shouldSimulateEmpty('merch') ? [] : mockMerchItems
   return validate(merchItemListSchema, data)
+}
+
+export async function fetchVideoItems() {
+  await wait(getSimulatedDelay())
+  if (shouldSimulateError('videos')) throw new Error('Unable to load videos.')
+  const data = shouldSimulateEmpty('videos') ? [] : mockVideoItems
+  return validate(videoItemListSchema, data)
 }

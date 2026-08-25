@@ -17,6 +17,7 @@
   --color-cyan-soft: #9df3ff;
   --color-violet: #8b5cf6;
   --color-blood: #ff2d4e;
+  --color-spotify: #1ed760;
 
   --font-display: 'Orbitron', 'Arial Narrow', sans-serif;
   --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
@@ -24,6 +25,7 @@
 
   --shadow-glow-magenta: 0 0 1px rgba(255, 46, 136, 0.8), 0 0 22px rgba(255, 46, 136, 0.45), 0 0 64px rgba(255, 46, 136, 0.2);
   --shadow-glow-cyan: 0 0 1px rgba(53, 234, 255, 0.8), 0 0 22px rgba(53, 234, 255, 0.4), 0 0 64px rgba(53, 234, 255, 0.18);
+  --shadow-glow-spotify: 0 0 1px rgba(30, 215, 96, 0.8), 0 0 22px rgba(30, 215, 96, 0.45), 0 0 64px rgba(30, 215, 96, 0.2);
 
   --animate-flicker: flicker 4s ease-in-out infinite;
   --animate-scan: scan 7s linear infinite;
@@ -87,6 +89,19 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  summary,
+  [type='button']:not(:disabled),
+  [type='submit']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
   }
 
   ::selection {

@@ -6,7 +6,7 @@ const influences = ['John Carpenter', 'VHS horror', 'Kavinsky', 'Perturbator', '
 
 export function About() {
   return (
-    <section id="about" className="relative py-24 sm:py-32">
+    <section id="about" className="relative scroll-mt-20 py-24 sm:py-32">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 md:grid-cols-2 md:items-center md:gap-16">
         <div>
           <SectionHeading

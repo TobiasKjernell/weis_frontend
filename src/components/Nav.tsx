@@ -5,6 +5,7 @@ import logo from '../assets/brand/moroii-logo-white.png'
 const links = [
   { href: '#about', label: 'About' },
   { href: '#gallery', label: 'Gallery' },
+  { href: '#videos', label: 'Videos' },
   { href: '#tour', label: 'Tour' },
   { href: '#merch', label: 'Merch' },
 ]
@@ -13,6 +14,18 @@ export function Nav() {
   const mobileNavOpen = useUIStore((s) => s.mobileNavOpen)
   const toggleMobileNav = useUIStore((s) => s.toggleMobileNav)
   const closeMobileNav = useUIStore((s) => s.closeMobileNav)
+
+  // The menu's own close animation (height collapse) cancels an in-flight
+  // smooth scroll if started in the same tick — including the browser's
+  // native hash-scroll. Close first, then scroll once that animation ends.
+  function handleMobileNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    e.preventDefault()
+    closeMobileNav()
+    window.history.pushState(null, '', href)
+    window.setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    }, 260)
+  }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-void/70 backdrop-blur-md">
@@ -72,7 +85,7 @@ export function Nav() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    onClick={closeMobileNav}
+                    onClick={(e) => handleMobileNavClick(e, link.href)}
                     className="block py-3 font-mono text-sm uppercase tracking-[0.2em] text-ink-muted hover:text-cyan"
                   >
                     {link.label}
@@ -82,7 +95,7 @@ export function Nav() {
               <li>
                 <a
                   href="#tour"
-                  onClick={closeMobileNav}
+                  onClick={(e) => handleMobileNavClick(e, '#tour')}
                   className="mt-2 block rounded-full border border-magenta/60 px-5 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-magenta"
                 >
                   Tickets

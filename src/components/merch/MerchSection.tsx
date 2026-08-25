@@ -8,7 +8,7 @@ export function MerchSection() {
   const query = useMerchItems()
 
   return (
-    <section id="merch" className="relative py-24 sm:py-32">
+    <section id="merch" className="relative scroll-mt-20 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           eyebrow="Merch"

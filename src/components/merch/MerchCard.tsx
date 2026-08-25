@@ -28,8 +28,8 @@ export function MerchCard({ item, index }: { item: MerchItem; index: number }) {
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-3 p-4">
-        <div>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 p-4">
+        <div className="min-w-0">
           <p className="font-display text-sm uppercase tracking-wide text-ink">{item.name}</p>
           <p className="mt-1 font-mono text-sm text-ink-muted">
             {item.price.toLocaleString('en-US', { style: 'currency', currency: item.currency })}

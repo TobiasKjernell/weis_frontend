@@ -15,6 +15,7 @@ import g07t from '../assets/gallery/moroii-07-thumb.jpg'
 import type { GalleryItem } from '../schemas/galleryItem'
 import type { TourDate } from '../schemas/tourDate'
 import type { MerchItem } from '../schemas/merchItem'
+import type { VideoItem } from '../schemas/videoItem'
 
 export const mockGalleryItems: GalleryItem[] = [
   { id: 'g01', src: g01, thumbSrc: g01t, alt: 'Moroii performing live under violet stage light', width: 1067, height: 1600 },
@@ -24,6 +25,18 @@ export const mockGalleryItems: GalleryItem[] = [
   { id: 'g05', src: g05, thumbSrc: g05t, alt: 'Moroii mid-performance, back logo visible', width: 1067, height: 1600 },
   { id: 'g06', src: g06, thumbSrc: g06t, alt: 'Moroii raising a hand to the crowd', width: 1067, height: 1600 },
   { id: 'g07', src: g07, thumbSrc: g07t, alt: 'Moroii at the keys, monochrome haze', width: 1067, height: 1600 },
+]
+
+export const mockVideoItems: VideoItem[] = [
+  { id: 'v01', youtubeId: 'gFiKYWZXM38', title: 'Death Portal Formulas (Official Music Video)' },
+  { id: 'v02', youtubeId: 'IcD_KFcRe3E', title: 'Escaping Moroii Manor (Official Music Video)' },
+  { id: 'v03', youtubeId: 'bQozH1flL_c', title: 'The Abzolver (Official Music Video)' },
+  { id: 'v04', youtubeId: 'GUq-E8AKjgI', title: 'Untamed (Sacred Bullets)' },
+  { id: 'v05', youtubeId: 'CH_sa7lEcps', title: 'Desert Spire (Official Music Video)' },
+  { id: 'v06', youtubeId: 'cCzmOcpimH0', title: 'The Cruel Dance of Time (Official Music Video)' },
+  { id: 'v07', youtubeId: 'UpxmE7KAzvA', title: 'Ex Luna (Official Music Video)' },
+  { id: 'v08', youtubeId: 'mEIGHKF350U', title: 'Moroii + Magnavolt + Plythe — Stockholm Live Show Trailer' },
+  { id: 'v09', youtubeId: '9ZS8kXInQ0Q', title: 'How to Make a Moroii Coffin' },
 ]
 
 export const mockTourDates: TourDate[] = [

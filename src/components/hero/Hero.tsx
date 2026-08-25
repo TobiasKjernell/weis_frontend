@@ -56,16 +56,15 @@ export function Hero() {
           className="mt-8 flex flex-wrap gap-4"
         >
           <a
-            href="#tour"
-            className="rounded-full bg-magenta px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] text-void shadow-glow-magenta transition hover:bg-magenta-soft"
+            href="https://open.spotify.com/artist/3tN8ryBWonMvlKsOFOhvKt?si=74iT9709Q3WpSQzWEbBk4g"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 rounded-full border border-spotify/60 px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] text-spotify transition hover:bg-spotify/10 hover:shadow-glow-spotify"
           >
-            See tour dates
-          </a>
-          <a
-            href="#gallery"
-            className="rounded-full border border-cyan/60 px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] text-cyan transition hover:bg-cyan/10 hover:shadow-glow-cyan"
-          >
-            View gallery
+            <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0Zm5.521 17.34a.748.748 0 0 1-1.032.24c-2.828-1.727-6.386-2.117-10.579-1.16a.75.75 0 0 1-.336-1.462c4.587-1.048 8.526-.596 11.706 1.35a.747.747 0 0 1 .241 1.032Zm1.469-3.267a.937.937 0 0 1-1.29.302c-3.237-1.99-8.172-2.566-12.005-1.404a.936.936 0 1 1-.542-1.792c4.377-1.328 9.816-.684 13.535 1.604a.936.936 0 0 1 .302 1.29Zm.126-3.403c-3.88-2.304-10.281-2.516-13.987-1.392a1.125 1.125 0 1 1-.653-2.153c4.254-1.29 11.322-1.041 15.784 1.61a1.125 1.125 0 1 1-1.144 1.935Z" />
+            </svg>
+            Listen on Spotify
           </a>
         </motion.div>
       </motion.div>

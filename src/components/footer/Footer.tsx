@@ -29,20 +29,14 @@ function YoutubeIcon(props: SVGProps<SVGSVGElement>) {
   )
 }
 
-function TiktokIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M14 4v9.5a3.2 3.2 0 1 1-3.2-3.2" />
-      <path d="M14 4c.4 2.2 2 3.8 4.2 4.2" />
-    </svg>
-  )
-}
-
 const socials = [
-  { label: 'Instagram', Icon: InstagramIcon },
-  { label: 'Spotify', Icon: SpotifyIcon },
-  { label: 'YouTube', Icon: YoutubeIcon },
-  { label: 'TikTok', Icon: TiktokIcon },
+  { label: 'Instagram', Icon: InstagramIcon, href: 'https://www.instagram.com/moroiimusic/' },
+  {
+    label: 'Spotify',
+    Icon: SpotifyIcon,
+    href: 'https://open.spotify.com/artist/3tN8ryBWonMvlKsOFOhvKt?si=74iT9709Q3WpSQzWEbBk4g',
+  },
+  { label: 'YouTube', Icon: YoutubeIcon, href: 'https://www.youtube.com/@moroiimusic' },
 ]
 
 export function Footer() {
@@ -53,13 +47,13 @@ export function Footer() {
           <img src={logo} alt="Moroii" className="h-8 w-auto opacity-80" />
 
           <div className="flex items-center gap-3">
-            {socials.map(({ label, Icon }) => (
+            {socials.map(({ label, Icon, href }) => (
               <a
                 key={label}
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
-                title={`${label} — coming soon`}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink-muted transition hover:border-cyan/60 hover:text-cyan hover:shadow-glow-cyan"
               >
                 <Icon className="h-4 w-4" />

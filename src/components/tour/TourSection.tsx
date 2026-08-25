@@ -8,7 +8,7 @@ export function TourSection() {
   const query = useTourDates()
 
   return (
-    <section id="tour" className="relative py-24 sm:py-32">
+    <section id="tour" className="relative scroll-mt-20 py-24 sm:py-32">
       <div className="mx-auto max-w-4xl px-5 sm:px-8">
         <SectionHeading eyebrow="On the road" title="Tour dates" />
 
