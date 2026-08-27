@@ -1,10 +1,11 @@
 import { z } from 'zod'
-import { mockGalleryItems, mockMerchItems, mockTourDates, mockVideoItems } from './mockData'
+import { mockGalleryItems, mockMerchItems } from './mockData'
 import { galleryItemListSchema } from '../schemas/galleryItem'
 import { merchItemListSchema } from '../schemas/merchItem'
 import { tourDateListSchema } from '../schemas/tourDate'
 import { videoItemListSchema } from '../schemas/videoItem'
 import { getSimulatedDelay, shouldSimulateEmpty, shouldSimulateError } from './config'
+import { fetchArtistTourDates, fetchArtistYoutubeVideos } from './api'
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -23,14 +24,23 @@ function validate<T>(schema: z.ZodType<T>, data: unknown): T {
   return result.data
 }
 
-// Swap the body of each of these for a real `fetch(...)` call later —
-// the validate() + simulated-latency/error scaffolding can stay as-is.
+// Tour dates and YouTube videos come from the artist platform API — see lib/api.ts.
+// Gallery and merch stay mock-backed; mockTourDates/mockVideoItems in mockData.ts
+// are kept for reference/dev use even though these fetchers no longer read them.
 
 export async function fetchTourDates() {
-  await wait(getSimulatedDelay())
-  if (shouldSimulateError('tour')) throw new Error('Unable to reach the tour dates service.')
-  const data = shouldSimulateEmpty('tour') ? [] : mockTourDates
-  return validate(tourDateListSchema, data)
+  const data = await fetchArtistTourDates()
+  const mapped = data
+    .map((item) => ({
+      id: String(item.id),
+      date: item.date,
+      location: item.location,
+      venue: item.venue,
+      ticketUrl: item.tickets_url,
+      soldOut: !item.tickets_state,
+    }))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  return validate(tourDateListSchema, mapped)
 }
 
 export async function fetchGalleryItems() {
@@ -48,8 +58,13 @@ export async function fetchMerchItems() {
 }
 
 export async function fetchVideoItems() {
-  await wait(getSimulatedDelay())
-  if (shouldSimulateError('videos')) throw new Error('Unable to load videos.')
-  const data = shouldSimulateEmpty('videos') ? [] : mockVideoItems
-  return validate(videoItemListSchema, data)
+  const data = await fetchArtistYoutubeVideos()
+  const mapped = [...data]
+    .sort((a, b) => a.position - b.position)
+    .map((item) => ({
+      id: String(item.id),
+      youtubeId: item.video,
+      title: item.title ?? 'Untitled',
+    }))
+  return validate(videoItemListSchema, mapped)
 }

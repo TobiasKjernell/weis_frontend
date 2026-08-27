@@ -2,9 +2,8 @@ import { z } from 'zod'
 
 export const tourDateSchema = z.object({
   id: z.string(),
-  date: z.iso.date(),
-  city: z.string(),
-  country: z.string(),
+  date: z.string(),
+  location: z.string(),
   venue: z.string(),
   ticketUrl: z.url(),
   soldOut: z.boolean().default(false),

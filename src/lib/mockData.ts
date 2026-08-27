@@ -40,12 +40,12 @@ export const mockVideoItems: VideoItem[] = [
 ]
 
 export const mockTourDates: TourDate[] = [
-  { id: 't01', date: '2026-09-12', city: 'Berlin', country: 'Germany', venue: 'Urban Spree', ticketUrl: 'https://tickets.example.com/moroii-berlin', soldOut: false },
-  { id: 't02', date: '2026-09-19', city: 'Warsaw', country: 'Poland', venue: 'Hydrozagadka', ticketUrl: 'https://tickets.example.com/moroii-warsaw', soldOut: false },
-  { id: 't03', date: '2026-10-03', city: 'London', country: 'UK', venue: 'The Dome', ticketUrl: 'https://tickets.example.com/moroii-london', soldOut: true },
-  { id: 't04', date: '2026-10-11', city: 'Paris', country: 'France', venue: 'La Machine du Moulin Rouge', ticketUrl: 'https://tickets.example.com/moroii-paris', soldOut: false },
-  { id: 't05', date: '2026-10-24', city: 'Stockholm', country: 'Sweden', venue: 'Slaktkyrkan', ticketUrl: 'https://tickets.example.com/moroii-stockholm', soldOut: false },
-  { id: 't06', date: '2026-11-07', city: 'Los Angeles', country: 'USA', venue: 'The Regent', ticketUrl: 'https://tickets.example.com/moroii-la', soldOut: false },
+  { id: 't01', date: '2026-09-12', location: 'Berlin, Germany', venue: 'Urban Spree', ticketUrl: 'https://tickets.example.com/moroii-berlin', soldOut: false },
+  { id: 't02', date: '2026-09-19', location: 'Warsaw, Poland', venue: 'Hydrozagadka', ticketUrl: 'https://tickets.example.com/moroii-warsaw', soldOut: false },
+  { id: 't03', date: '2026-10-03', location: 'London, UK', venue: 'The Dome', ticketUrl: 'https://tickets.example.com/moroii-london', soldOut: true },
+  { id: 't04', date: '2026-10-11', location: 'Paris, France', venue: 'La Machine du Moulin Rouge', ticketUrl: 'https://tickets.example.com/moroii-paris', soldOut: false },
+  { id: 't05', date: '2026-10-24', location: 'Stockholm, Sweden', venue: 'Slaktkyrkan', ticketUrl: 'https://tickets.example.com/moroii-stockholm', soldOut: false },
+  { id: 't06', date: '2026-11-07', location: 'Los Angeles, USA', venue: 'The Regent', ticketUrl: 'https://tickets.example.com/moroii-la', soldOut: false },
 ]
 
 export const mockMerchItems: MerchItem[] = [
