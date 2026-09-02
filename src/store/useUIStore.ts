@@ -12,6 +12,10 @@ interface UIState {
   openLightbox: (index: number) => void
   closeLightbox: () => void
   stepLightbox: (delta: number, count: number) => void
+
+  reservingMerchItemId: string | null
+  openReservation: (itemId: string) => void
+  closeReservation: () => void
 }
 
 export const useUIStore = create<UIState>()((set) => ({
@@ -31,4 +35,8 @@ export const useUIStore = create<UIState>()((set) => ({
       const next = (s.lightboxIndex + delta + count) % count
       return { lightboxIndex: next }
     }),
+
+  reservingMerchItemId: null,
+  openReservation: (itemId) => set({ reservingMerchItemId: itemId }),
+  closeReservation: () => set({ reservingMerchItemId: null }),
 }))

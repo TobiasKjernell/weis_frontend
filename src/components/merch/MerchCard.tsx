@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion'
+import { useUIStore } from '../../store/useUIStore'
 import type { MerchItem } from '../../schemas/merchItem'
 import { MerchPlaceholderArt } from './MerchPlaceholderArt'
 
-const tagStyles: Record<NonNullable<MerchItem['tag']>, string> = {
-  new: 'border-cyan/60 text-cyan',
-  preorder: 'border-violet/60 text-violet',
-  'sold-out': 'border-blood/50 text-blood',
-}
-
 export function MerchCard({ item, index }: { item: MerchItem; index: number }) {
+  const openReservation = useUIStore((s) => s.openReservation)
+  const totalStock = item.variants.reduce((sum, variant) => sum + variant.stock, 0)
+  const soldOut = totalStock <= 0
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -18,12 +17,19 @@ export function MerchCard({ item, index }: { item: MerchItem; index: number }) {
       className="group overflow-hidden rounded-lg border border-line bg-surface/40 transition hover:border-magenta/40"
     >
       <div className="relative">
-        <MerchPlaceholderArt index={index} />
-        {item.tag && (
-          <span
-            className={`absolute left-3 top-3 rounded-full border bg-void/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest ${tagStyles[item.tag]}`}
-          >
-            {item.tag.replace('-', ' ')}
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.name}
+            loading="lazy"
+            className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <MerchPlaceholderArt index={index} />
+        )}
+        {soldOut && (
+          <span className="absolute left-3 top-3 rounded-full border border-blood/50 bg-void/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-blood">
+            Sold out
           </span>
         )}
       </div>
@@ -37,11 +43,11 @@ export function MerchCard({ item, index }: { item: MerchItem; index: number }) {
         </div>
         <button
           type="button"
-          disabled={!item.available}
-          title="Store coming soon"
+          disabled={soldOut}
+          onClick={() => openReservation(item.id)}
           className="shrink-0 rounded-full border border-line px-4 py-2 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-muted transition hover:border-magenta/50 hover:text-magenta disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line disabled:hover:text-ink-muted"
         >
-          {item.available ? 'Notify me' : 'Unavailable'}
+          {soldOut ? 'Sold out' : 'Reserve'}
         </button>
       </div>
     </motion.div>

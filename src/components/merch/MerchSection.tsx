@@ -3,6 +3,7 @@ import { QueryBoundary } from '../ui/QueryBoundary'
 import { SectionHeading } from '../ui/SectionHeading'
 import { MerchCard } from './MerchCard'
 import { MerchSkeleton } from './MerchSkeleton'
+import { ReservationModal } from './ReservationModal'
 
 export function MerchSection() {
   const query = useMerchItems()
@@ -13,7 +14,7 @@ export function MerchSection() {
         <SectionHeading
           eyebrow="Merch"
           title="Wear the static"
-          description="Storefront is on its way — this is a preview of what's coming."
+          description="Limited drops, reserved by hand — pick a piece and we'll follow up to confirm."
         />
 
         <div className="mt-12">
@@ -32,6 +33,8 @@ export function MerchSection() {
           </QueryBoundary>
         </div>
       </div>
+
+      {query.data && <ReservationModal items={query.data} />}
     </section>
   )
 }

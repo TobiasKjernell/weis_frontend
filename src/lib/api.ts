@@ -26,8 +26,45 @@ interface GalleryImageApiResponse {
   position: number
 }
 
-async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`)
+type MerchSizeApi = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
+
+interface MerchVariantApiResponse {
+  id: number
+  size: MerchSizeApi | null
+  stock: number
+}
+
+interface MerchItemApiResponse {
+  id: number
+  name: string
+  description: string | null
+  price_cents: number
+  type: 'clothing' | 'misc'
+  image_url: string | null
+  position: number
+  variants: MerchVariantApiResponse[]
+}
+
+export interface MerchReservationRequest {
+  merch_variant_id: number
+  contact_email?: string
+  contact_instagram?: string
+  quantity: number
+}
+
+interface MerchReservationApiResponse {
+  id: number
+  merch_variant_id: number
+  user_id: number
+  contact_email: string | null
+  contact_instagram: string | null
+  quantity: number
+  status: string
+  created_at: string
+}
+
+async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${API_BASE_URL}${path}`, init)
   if (!res.ok) {
     throw new Error(`Request to ${path} failed with status ${res.status}`)
   }
@@ -44,4 +81,16 @@ export function fetchArtistTourDates() {
 
 export function fetchArtistGalleryImages() {
   return fetchJson<GalleryImageApiResponse[]>(`/api/artists/${ARTIST_SLUG}/images`)
+}
+
+export function fetchArtistMerch() {
+  return fetchJson<MerchItemApiResponse[]>(`/api/artists/${ARTIST_SLUG}/merch`)
+}
+
+export function reserveArtistMerchItem(itemId: number, payload: MerchReservationRequest) {
+  return fetchJson<MerchReservationApiResponse>(`/api/artists/${ARTIST_SLUG}/merch/${itemId}/reserve`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
 }

@@ -1,15 +1,15 @@
 import { z } from 'zod'
-import { mockMerchItems } from './mockData'
 import { galleryItemListSchema } from '../schemas/galleryItem'
 import { merchItemListSchema } from '../schemas/merchItem'
 import { tourDateListSchema } from '../schemas/tourDate'
 import { videoItemListSchema } from '../schemas/videoItem'
-import { getSimulatedDelay, shouldSimulateEmpty, shouldSimulateError } from './config'
-import { fetchArtistGalleryImages, fetchArtistTourDates, fetchArtistYoutubeVideos } from './api'
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+import {
+  fetchArtistGalleryImages,
+  fetchArtistMerch,
+  fetchArtistTourDates,
+  fetchArtistYoutubeVideos,
+  reserveArtistMerchItem,
+} from './api'
 
 /**
  * Parses `data` through `schema`, mapping a Zod failure onto the same
@@ -24,10 +24,10 @@ function validate<T>(schema: z.ZodType<T>, data: unknown): T {
   return result.data
 }
 
-// Tour dates, YouTube videos, and gallery images come from the artist platform
-// API — see lib/api.ts. Merch stays mock-backed; mockTourDates/mockVideoItems/
-// mockGalleryItems in mockData.ts are kept for reference/dev use even though
-// these fetchers no longer read them.
+// Tour dates, YouTube videos, gallery images, and merch all come from the
+// artist platform API — see lib/api.ts. mockTourDates/mockVideoItems/
+// mockGalleryItems/mockMerchItems in mockData.ts are kept for reference/dev
+// use even though these fetchers no longer read them.
 
 export async function fetchTourDates() {
   const data = await fetchArtistTourDates()
@@ -57,10 +57,41 @@ export async function fetchGalleryItems() {
 }
 
 export async function fetchMerchItems() {
-  await wait(getSimulatedDelay())
-  if (shouldSimulateError('merch')) throw new Error('Unable to load merch inventory.')
-  const data = shouldSimulateEmpty('merch') ? [] : mockMerchItems
-  return validate(merchItemListSchema, data)
+  const data = await fetchArtistMerch()
+  const mapped = [...data]
+    .sort((a, b) => a.position - b.position)
+    .map((item) => ({
+      id: String(item.id),
+      name: item.name,
+      description: item.description,
+      price: item.price_cents / 100,
+      currency: 'USD',
+      type: item.type,
+      imageUrl: item.image_url,
+      variants: item.variants.map((variant) => ({
+        id: String(variant.id),
+        size: variant.size,
+        stock: variant.stock,
+      })),
+    }))
+  return validate(merchItemListSchema, mapped)
+}
+
+export interface ReserveMerchInput {
+  itemId: string
+  variantId: string
+  contactEmail?: string
+  contactInstagram?: string
+  quantity: number
+}
+
+export function reserveMerch({ itemId, variantId, contactEmail, contactInstagram, quantity }: ReserveMerchInput) {
+  return reserveArtistMerchItem(Number(itemId), {
+    merch_variant_id: Number(variantId),
+    contact_email: contactEmail || undefined,
+    contact_instagram: contactInstagram || undefined,
+    quantity,
+  })
 }
 
 export async function fetchVideoItems() {
