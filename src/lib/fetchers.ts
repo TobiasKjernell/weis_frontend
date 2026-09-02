@@ -1,11 +1,11 @@
 import { z } from 'zod'
-import { mockGalleryItems, mockMerchItems } from './mockData'
+import { mockMerchItems } from './mockData'
 import { galleryItemListSchema } from '../schemas/galleryItem'
 import { merchItemListSchema } from '../schemas/merchItem'
 import { tourDateListSchema } from '../schemas/tourDate'
 import { videoItemListSchema } from '../schemas/videoItem'
 import { getSimulatedDelay, shouldSimulateEmpty, shouldSimulateError } from './config'
-import { fetchArtistTourDates, fetchArtistYoutubeVideos } from './api'
+import { fetchArtistGalleryImages, fetchArtistTourDates, fetchArtistYoutubeVideos } from './api'
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -24,9 +24,10 @@ function validate<T>(schema: z.ZodType<T>, data: unknown): T {
   return result.data
 }
 
-// Tour dates and YouTube videos come from the artist platform API — see lib/api.ts.
-// Gallery and merch stay mock-backed; mockTourDates/mockVideoItems in mockData.ts
-// are kept for reference/dev use even though these fetchers no longer read them.
+// Tour dates, YouTube videos, and gallery images come from the artist platform
+// API — see lib/api.ts. Merch stays mock-backed; mockTourDates/mockVideoItems/
+// mockGalleryItems in mockData.ts are kept for reference/dev use even though
+// these fetchers no longer read them.
 
 export async function fetchTourDates() {
   const data = await fetchArtistTourDates()
@@ -44,10 +45,15 @@ export async function fetchTourDates() {
 }
 
 export async function fetchGalleryItems() {
-  await wait(getSimulatedDelay())
-  if (shouldSimulateError('gallery')) throw new Error('Unable to load gallery images.')
-  const data = shouldSimulateEmpty('gallery') ? [] : mockGalleryItems
-  return validate(galleryItemListSchema, data)
+  const data = await fetchArtistGalleryImages()
+  const mapped = [...data]
+    .sort((a, b) => a.position - b.position)
+    .map((item) => ({
+      id: String(item.id),
+      src: item.url,
+      alt: `Moroii live photo ${item.position + 1}`,
+    }))
+  return validate(galleryItemListSchema, mapped)
 }
 
 export async function fetchMerchItems() {

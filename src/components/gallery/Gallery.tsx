@@ -23,7 +23,7 @@ function GalleryTile({ item, index, onOpen }: { item: GalleryItem; index: number
       className="group hover:border-[rgba(255,46,136,0.5)] relative block aspect-2/3 w-full overflow-hidden rounded-md border border-line focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan"
     >
       <img
-        src={item.thumbSrc}
+        src={item.src}
         alt={item.alt}
         loading="lazy"
         className="h-full w-full object-cover transition duration-500 group-hover:scale-105 group-hover:opacity-90"

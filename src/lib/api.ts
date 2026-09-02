@@ -20,6 +20,12 @@ interface TourDateApiResponse {
   tickets_url: string
 }
 
+interface GalleryImageApiResponse {
+  id: number
+  url: string
+  position: number
+}
+
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${path}`)
   if (!res.ok) {
@@ -34,4 +40,8 @@ export function fetchArtistYoutubeVideos() {
 
 export function fetchArtistTourDates() {
   return fetchJson<TourDateApiResponse[]>(`/api/artists/${ARTIST_SLUG}/tour-dates`)
+}
+
+export function fetchArtistGalleryImages() {
+  return fetchJson<GalleryImageApiResponse[]>(`/api/artists/${ARTIST_SLUG}/images`)
 }
