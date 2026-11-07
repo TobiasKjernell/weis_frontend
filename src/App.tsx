@@ -1,5 +1,4 @@
 import { Nav } from './components/Nav'
-import { Atmosphere } from './components/ui/Atmosphere'
 import { IntroOverlay } from './components/intro/IntroOverlay'
 import { Hero } from './components/hero/Hero'
 import { About } from './components/about/About'
@@ -18,15 +17,14 @@ function App() {
     <>
       {!introPlayed && <IntroOverlay onComplete={markIntroPlayed} />}
 
-      <Atmosphere />
       <Nav />
 
       <main>
         <Hero />
-        <About />
-        <Gallery />
         <Videos />
         <TourSection />
+        <About />
+        <Gallery />
         <MerchSection />
       </main>
 

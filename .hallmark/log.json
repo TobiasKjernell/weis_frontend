@@ -1,0 +1,20 @@
+[
+ {
+  "shape": "Index",
+  "theme": "darkroom",
+  "hero": "Ledge",
+  "nav": "edge-aligned",
+  "footer": "statement",
+  "imagery": "photographs",
+  "signature": "hooded silhouette printed black and white under a poster hairline MOROII",
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "waived": [
+   "39b",
+   "77"
+  ],
+  "prompt": "darksynth 80s horror musician site",
+  "date": "2026-11-07"
+ }
+]

@@ -25,13 +25,13 @@ function groupByYear(dates: TourDate[]) {
 
 function YearGroups({ groups, isPast }: { groups: { year: number; items: TourDate[] }[]; isPast: boolean }) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-(--space-xl)">
       {groups.map((group) => (
         <div key={group.year}>
-          <p className="mb-2 font-mono text-xs uppercase tracking-[0.3em] text-ink-dim">{group.year}</p>
-          <div className="divide-y divide-line/70 border-y border-line/70">
-            {group.items.map((date, i) => (
-              <TourDateRow key={date.id} tourDate={date} delay={Math.min(i, 5) * 0.05} isPast={isPast} />
+          <p className="label num mb-2">{group.year}</p>
+          <div className="rows">
+            {group.items.map((date) => (
+              <TourDateRow key={date.id} tourDate={date} isPast={isPast} />
             ))}
           </div>
         </div>
@@ -44,11 +44,11 @@ export function TourSection() {
   const query = useTourDates()
 
   return (
-    <section id="tour" className="relative scroll-mt-20 py-24 sm:py-32">
-      <div className="mx-auto max-w-4xl px-5 sm:px-8">
-        <SectionHeading eyebrow="On the road" title="Tour dates" />
+    <section id="tour" className="section well grained scroll-mt-16">
+      <div className="container">
+        <SectionHeading title="Tour dates" />
 
-        <div className="mt-12">
+        <div className="mt-(--space-2xl)">
           <QueryBoundary
             query={query}
             skeleton={<TourSkeleton />}
@@ -62,17 +62,12 @@ export function TourSection() {
                 .sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime())
 
               return (
-                <div className="space-y-16">
+                <div className="space-y-(--space-3xl)">
                   {upcoming.length > 0 && <YearGroups groups={groupByYear(upcoming)} isPast={false} />}
 
                   {past.length > 0 && (
                     <div>
-                      <p className="font-mono text-xs uppercase tracking-[0.3em] text-magenta text-glow-magenta">
-                        Archive
-                      </p>
-                      <h3 className="mt-2 mb-8 font-display text-2xl uppercase tracking-wide text-ink">
-                        Previously played
-                      </h3>
+                      <h3 className="mb-(--space-lg) text-(length:--text-2xl)">Previously played</h3>
                       <YearGroups groups={groupByYear(past)} isPast />
                     </div>
                   )}

@@ -13,44 +13,66 @@ export function VideoPlayer({ items }: { items: VideoItem[] }) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-stretch">
-      <div className="lg:col-span-2">
-        <div className="aspect-video w-full overflow-hidden rounded-md border border-line bg-void">
-          <iframe
-            key={current.id}
-            src={`https://www.youtube-nocookie.com/embed/${current.youtubeId}?rel=0${hasInteracted ? '&autoplay=1' : ''}`}
-            title={current.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="h-full w-full"
-          />
+    <div className="grid grid-cols-1 gap-(--space-xl) lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] lg:gap-(--gap-columns)">
+      <div>
+        <div className="aspect-video w-full bg-well">
+          {hasInteracted ? (
+            <iframe
+              key={current.id}
+              src={`https://www.youtube-nocookie.com/embed/${current.youtubeId}?rel=0&autoplay=1`}
+              title={current.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="h-full w-full"
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setHasInteracted(true)}
+              aria-label={`Play ${current.title}`}
+              className="plate group relative h-full"
+            >
+              <img
+                src={`https://i.ytimg.com/vi/${current.youtubeId}/hqdefault.jpg`}
+                alt=""
+                className="print h-full w-full object-cover"
+              />
+              <span className="absolute inset-0 flex items-center justify-center">
+                <span className="flex h-16 w-16 items-center justify-center border border-fibre bg-ground text-fibre transition-colors group-hover:border-safelight group-hover:bg-safelight group-hover:text-safelight-ink">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6 translate-x-0.5" aria-hidden="true">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </span>
+            </button>
+          )}
         </div>
-        <p className="mt-4 font-mono text-xs uppercase tracking-[0.15em] text-ink">{current.title}</p>
+        <h3 className="mt-(--space-md) max-w-none">{current.title}</h3>
       </div>
 
-      <div className="flex max-h-[70vh] flex-col gap-1 overflow-y-auto rounded-md border border-line bg-surface/40 p-2 lg:max-h-none">
+      <ol className="rows max-h-[70vh] overflow-y-auto lg:max-h-none">
         {items.map((item, i) => {
           const active = i === selected
           return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => selectVideo(i)}
-              aria-current={active}
-              className={cn(
-                'flex items-center gap-3 rounded-md px-3 py-2.5 text-left transition',
-                active ? 'bg-magenta/10 text-magenta' : 'text-ink-muted hover:bg-surface-2 hover:text-ink',
-              )}
-            >
-              <span className="w-5 shrink-0 font-mono text-[10px] tabular-nums">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span className="flex-1 truncate font-mono text-xs uppercase tracking-[0.1em]">{item.title}</span>
-              {active && <span className="h-2 w-2 shrink-0 rounded-full bg-magenta shadow-glow-magenta" />}
-            </button>
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => selectVideo(i)}
+                aria-current={active}
+                className={cn(
+                  'flex w-full items-baseline gap-4 py-3 text-left transition-colors hover:text-fibre',
+                  active ? 'text-fibre' : 'text-dim',
+                )}
+              >
+                <span className={cn('label num w-6 shrink-0', active && 'text-safelight')}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="title flex-1">{item.title}</span>
+              </button>
+            </li>
           )
         })}
-      </div>
+      </ol>
     </div>
   )
 }
