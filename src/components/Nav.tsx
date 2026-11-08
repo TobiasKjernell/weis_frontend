@@ -29,12 +29,12 @@ export function Nav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-void/70 backdrop-blur-md">
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <nav className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
         <a href="#top" className="flex items-center gap-2" onClick={closeMobileNav}>
           <img src={logo} alt="Moroii" className="h-6 w-auto opacity-90" />
         </a>
 
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-8 md:absolute md:left-1/2 md:flex md:-translate-x-1/2">
           {links.map((link) => (
             <li key={link.href}>
               <a
@@ -46,13 +46,6 @@ export function Nav() {
             </li>
           ))}
         </ul>
-
-        <a
-          href="#tour"
-          className="hidden rounded-full border border-magenta/60 px-5 py-2 font-mono text-xs uppercase tracking-[0.2em] text-magenta transition hover:bg-magenta/10 hover:shadow-glow-magenta md:inline-flex"
-        >
-          Tickets
-        </a>
 
         <button
           type="button"
@@ -92,15 +85,6 @@ export function Nav() {
                   </a>
                 </li>
               ))}
-              <li>
-                <a
-                  href="#tour"
-                  onClick={(e) => handleMobileNavClick(e, '#tour')}
-                  className="mt-2 block rounded-full border border-magenta/60 px-5 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-magenta"
-                >
-                  Tickets
-                </a>
-              </li>
             </ul>
           </motion.div>
         )}

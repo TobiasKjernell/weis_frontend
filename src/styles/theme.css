@@ -176,8 +176,8 @@
 
   .bg-grid-horizon {
     background-image:
-      linear-gradient(rgba(255, 46, 136, 0.18) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 46, 136, 0.18) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 }

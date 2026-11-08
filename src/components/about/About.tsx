@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import aboutBg from '../../assets/brand/about-bg.jpg'
 import { SectionHeading } from '../ui/SectionHeading'
 
-const influences = ['John Carpenter', 'VHS horror', 'Kavinsky', 'Perturbator', 'CRT static', 'Midnight drives']
+const influences = ['John Carpenter', 'VHS horror', 'Kavinsky', 'Perturbator', 'CRT static', 'Midnight drives', 'Carpenter Brut']
 
 export function About() {
   return (
@@ -15,9 +15,7 @@ export function About() {
           />
           <div className="mt-6 space-y-4 text-ink-muted">
             <p>
-              Moroii writes music for the hour when the neon signs are the only thing still awake.
-              Drawing from 80&apos;s slasher scores and cold-wave electronics, every track is built
-              around analog synthesizers, tape hiss, and a sense of dread that never quite resolves.
+             Moroii is a Stockholm-based darksynth project steeped in 80s synth and the dread of horror cinema. Vintage hardware emulations meet the force of modern production, setting glossy retro against raw distortion.   
             </p>
             <p>
               Live, the set becomes a ritual — fog, strobing LED walls, and a hooded silhouette 
