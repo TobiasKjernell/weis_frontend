@@ -3,11 +3,11 @@ import { useUIStore } from '../store/useUIStore'
 import logo from '../assets/brand/moroii-logo-white.png'
 
 const links = [
-  { href: '#about', label: 'About' },
-  { href: '#gallery', label: 'Gallery' },
   { href: '#videos', label: 'Videos' },
-  { href: '#tour', label: 'Tour' },
   { href: '#merch', label: 'Merch' },
+  { href: '#gallery', label: 'Gallery' },
+  { href: '#about', label: 'About' },
+  { href: '#tour', label: 'Shows' },
 ]
 
 export function Nav() {

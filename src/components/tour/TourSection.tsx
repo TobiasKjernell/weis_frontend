@@ -46,7 +46,7 @@ export function TourSection() {
   return (
     <section id="tour" className="relative scroll-mt-20 py-24 sm:py-32">
       <div className="mx-auto max-w-4xl px-5 sm:px-8">
-        <SectionHeading eyebrow="On the road" title="Tour dates" />
+        <SectionHeading eyebrow="On the road" title="Shows" />
 
         <div className="mt-12">
           <QueryBoundary

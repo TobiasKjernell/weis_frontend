@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { galleryItemListSchema } from '../schemas/galleryItem'
-import { merchItemListSchema } from '../schemas/merchItem'
+import { merchItemListSchema, merchSizeSchema } from '../schemas/merchItem'
 import { tourDateListSchema } from '../schemas/tourDate'
 import { videoItemListSchema } from '../schemas/videoItem'
 import {
@@ -56,6 +56,8 @@ export async function fetchGalleryItems() {
   return validate(galleryItemListSchema, mapped)
 }
 
+const SIZE_ORDER = merchSizeSchema.options
+
 export async function fetchMerchItems() {
   const data = await fetchArtistMerch()
   const mapped = [...data]
@@ -65,14 +67,16 @@ export async function fetchMerchItems() {
       name: item.name,
       description: item.description,
       price: item.price_cents / 100,
-      currency: 'USD',
+      currency: 'EUR',
       type: item.type,
       imageUrl: item.image_url,
-      variants: item.variants.map((variant) => ({
-        id: String(variant.id),
-        size: variant.size,
-        stock: variant.stock,
-      })),
+      variants: [...item.variants]
+        .sort((a, b) => SIZE_ORDER.indexOf(a.size as never) - SIZE_ORDER.indexOf(b.size as never))
+        .map((variant) => ({
+          id: String(variant.id),
+          size: variant.size,
+          stock: variant.stock,
+        })),
     }))
   return validate(merchItemListSchema, mapped)
 }

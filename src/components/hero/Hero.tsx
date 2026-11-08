@@ -45,7 +45,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.55 }}
               className="text-ink-muted"
             >
-            Swedish darksynth from Stockholm. Retro meets dirty distortion. 
+            Retro meets dirty distortion. 
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}

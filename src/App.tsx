@@ -16,11 +16,11 @@ function App() {
 
       <main>
         <Hero />
-        <About />
-        <Gallery />
         <Videos />
-        <TourSection />
         <MerchSection />
+        <Gallery />
+        <About />
+        <TourSection />
       </main>
 
       <Footer />

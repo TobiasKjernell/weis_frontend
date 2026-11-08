@@ -13,7 +13,7 @@ export const merchItemSchema = z.object({
   name: z.string(),
   description: z.string().nullable(),
   price: z.number().nonnegative(),
-  currency: z.string().default('USD'),
+  currency: z.string().default('EUR'),
   type: z.enum(['clothing', 'misc']),
   imageUrl: z.string().nullable(),
   variants: z.array(merchVariantSchema),

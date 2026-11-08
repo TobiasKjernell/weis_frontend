@@ -13,7 +13,7 @@ export function MerchSection() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           eyebrow="Merch"
-          title="Wear the static"
+          title="Wear the mark"
           description="Limited drops, reserved by hand — pick a piece and we'll follow up to confirm."
         />
 
